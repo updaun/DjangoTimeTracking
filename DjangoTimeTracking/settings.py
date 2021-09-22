@@ -50,7 +50,7 @@ ALLOWED_HOSTS = []
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
-LOGOUT_URL = 'frontpage'
+LOGOUT_REDIRECT_URL = 'frontpage'
 
 # Application definition
 
@@ -64,6 +64,7 @@ INSTALLED_APPS = [
 
     'apps.core',
     'apps.userprofile',
+    'apps.team',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.team.context_processors.active_team',
             ],
         },
     },
