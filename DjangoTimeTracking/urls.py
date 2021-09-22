@@ -28,6 +28,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #
+    # Dashboard
+
+    path('projects/', include('apps.project.urls')),
+
+    #
     # Auth
 
     path('signup/', signup, name='signup'),
