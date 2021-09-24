@@ -73,6 +73,7 @@ fabric.properties
 venv/
 
 .env
+.emailenv
 
 db.sqlite3
 

@@ -1,15 +1,21 @@
 #
 # Import functionality from Django
 
-from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
+
+#
+#
+
+from apps.team.models import Invitation
+from apps.userprofile.models import Userprofile
+
 
 #
 # Views
-from apps.userprofile.models import Userprofile
-
 
 def frontpage(request):
     return render(request, 'core/frontpage.html')
@@ -36,9 +42,13 @@ def signup(request):
 
             login(request, user)
 
-            return redirect('frontpage')
+            invitations = Invitation.objects.filter(email=user.email, status=Invitation.INVITED)
 
+            if invitations:
+                return redirect('accept_invitation')
+            else:
+                return redirect('dashboard')
     else:
         form = UserCreationForm()
 
-    return render(request, 'core/signup.html', {'form':form})
+    return render(request, 'core/signup.html', {'form': form})

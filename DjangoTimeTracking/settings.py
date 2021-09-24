@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 21.07.02 read .env(secret key)
 env_list = dict()
 local_env = open(os.path.join(BASE_DIR, '.env'))
+email_api_env = open(os.path.join(BASE_DIR, '.emailenv'))
 
 while True:
     line = local_env.readline()
@@ -34,6 +35,12 @@ while True:
     key = line[:start]
     value = line[start+1:]
     env_list[key] = value
+
+while True:
+    line = email_api_env.readline()
+    if not line:
+        break
+    env_list['sendgrid_api'] = line
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -51,6 +58,15 @@ ALLOWED_HOSTS = []
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
 LOGOUT_REDIRECT_URL = 'frontpage'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = env_list['sendgrid_api']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_EMAIL_FROM = 'DjangoTimeTracking <updowney@daum.net>'
+
+ACCEPTATION_URL = 'http://127.0.0.1:8000/signup/'
 
 # Application definition
 
